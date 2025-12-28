@@ -1,0 +1,408 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "parser",
+    "version": "1.0"
+  },
+  "paths": {
+    "/items": {
+      "get": {
+        "summary": "List Items",
+        "description": "Вернуть список всех элементов.",
+        "operationId": "list_items_items_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Item"
+                  },
+                  "type": "array",
+                  "title": "Response List Items Items Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Item",
+        "operationId": "create_item_items_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/items/{item_id}": {
+      "get": {
+        "summary": "Retrieve Item",
+        "description": "Вернуть элемент по id.",
+        "operationId": "retrieve_item_items__item_id__get",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update Item Partial",
+        "description": "Частичное обновление элемента.",
+        "operationId": "update_item_partial_items__item_id__patch",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Item",
+        "description": "Удаление элемента.",
+        "operationId": "delete_item_items__item_id__delete",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/run": {
+      "post": {
+        "summary": "Run Poller Once",
+        "description": "Ручной запуск poller-задачи.",
+        "operationId": "run_poller_once_tasks_run_post",
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "Item": {
+        "properties": {
+          "currency": {
+            "type": "string",
+            "title": "Currency",
+            "description": "Код элемента (USD, BTC и т.д.)"
+          },
+          "rate": {
+            "type": "number",
+            "minimum": 0,
+            "title": "Rate",
+            "description": "Цена / курс (\u003E= 0)"
+          },
+          "amount": {
+            "type": "integer",
+            "minimum": 1,
+            "title": "Amount",
+            "description": "Номинал (\u003E= 1)",
+            "default": 1
+          },
+          "platform": {
+            "type": "string",
+            "title": "Platform",
+            "description": "Источник данных"
+          },
+          "crypto_currency": {
+            "type": "boolean",
+            "title": "Crypto Currency",
+            "description": "Является ли криптовалютой",
+            "default": false
+          },
+          "id": {
+            "type": "integer",
+            "title": "Id",
+            "description": "ID элемента"
+          },
+          "last_updated_time": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Last Updated Time",
+            "description": "Дата последнего обновления"
+          }
+        },
+        "type": "object",
+        "required": [
+          "currency",
+          "rate",
+          "platform",
+          "id",
+          "last_updated_time"
+        ],
+        "title": "Item",
+        "description": "Schema ответа Item."
+      },
+      "ItemCreate": {
+        "properties": {
+          "currency": {
+            "type": "string",
+            "title": "Currency",
+            "description": "Код элемента (USD, BTC и т.д.)"
+          },
+          "rate": {
+            "type": "number",
+            "minimum": 0,
+            "title": "Rate",
+            "description": "Цена / курс (\u003E= 0)"
+          },
+          "amount": {
+            "type": "integer",
+            "minimum": 1,
+            "title": "Amount",
+            "description": "Номинал (\u003E= 1)",
+            "default": 1
+          },
+          "platform": {
+            "type": "string",
+            "title": "Platform",
+            "description": "Источник данных"
+          },
+          "crypto_currency": {
+            "type": "boolean",
+            "title": "Crypto Currency",
+            "description": "Является ли криптовалютой",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "currency",
+          "rate",
+          "platform"
+        ],
+        "title": "ItemCreate",
+        "description": "Schema для создания Item."
+      },
+      "ItemUpdate": {
+        "properties": {
+          "rate": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rate",
+            "description": "Цена / курс"
+          },
+          "amount": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount",
+            "description": "Номинал"
+          },
+          "platform": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Platform",
+            "description": "Источник"
+          },
+          "crypto_currency": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Crypto Currency",
+            "description": "Криптовалюта"
+          }
+        },
+        "type": "object",
+        "title": "ItemUpdate",
+        "description": "Schema для частичного обновления Item."
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
