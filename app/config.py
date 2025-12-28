@@ -1,0 +1,11 @@
+DATABASE_URL = "sqlite+aiosqlite:///./database.db"
+CBR_URL = "https://www.cbr.ru/scripts/XML_daily.asp"
+BINANCE_URL = "https://api.binance.com/api/v3/ticker/price"
+POLL_INTERVAL_SECONDS = 30
+USER_AGENT = "currency-parser/1.0"
+CBR_PLATFORM = "Центробанк"
+CURRENCY = ("USD", "EUR", "JPY")
+CRYPTO_CODES = ("BTC", "ETH", "TON")
+CRYPTO_PLATFORM = "Binance"
+DEFAULT_TIMEOUT = 10
+NATS_SERVERS = ["nats://127.0.0.1:4222"]
