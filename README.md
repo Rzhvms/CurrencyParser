@@ -1,4 +1,4 @@
-## Запуск проекта
+## Инструкция по запуску проекта
 
 Для запуска проекта необходимо предварительно подготовить рабочее окружение и установить все зависимости.
 
@@ -51,3 +51,8 @@ uvicorn app.main:app
 ```
 
 После выполнения указанных шагов приложение будет доступно и готово к работе.
+
+## [Документация API](https://github.com/Rzhvms/CurrencyParser/blob/main/api_documentation.json)
+
+## Скрин с WebSocket-клиента Postman
+<img width="1285" height="709" alt="image" src="https://github.com/user-attachments/assets/78f6f661-fc8b-4e3e-b940-c39776eb223b" />
